@@ -1,0 +1,65 @@
+﻿services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD_FILE: /run/secrets/db_password
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - backend
+    secrets:
+      - db_password
+      - db_root_password
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p\"$(cat /run/secrets/db_root_password)\" --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  wordpress:
+    image: wordpress:latest
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD_FILE: /run/secrets/db_password
+      WORDPRESS_DB_NAME: wordpress
+    ports:
+      - "8080:80"
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - backend
+      - frontend
+    secrets:
+      - db_password
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    depends_on:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+    ports:
+      - "8081:80"
+    networks:
+      - backend
+
+volumes:
+  mysql_data:
+  wordpress_data:
+
+networks:
+  backend:
+  frontend:
+
+secrets:
+  db_password:
+    file: ./secrets/db_password.txt
+  db_root_password:
+    file: ./secrets/db_root_password.txt
