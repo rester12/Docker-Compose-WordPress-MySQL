@@ -6,7 +6,7 @@ This project stands up a fully containerized WordPress blogging stack, WordPress
 
 ## Medium Article
 
-*[link coming soon]*
+[Docker Compose - WordPress + MySQL: Network Segmentation, Secrets, and Healthcheck-Gated Startup](https://medium.com/@rester.mcglown/docker-compose-wordpress-mysql-network-segmentation-secrets-and-healthcheck-gated-startup-0c72836bd4ae)
 
 ## Architecture
 
