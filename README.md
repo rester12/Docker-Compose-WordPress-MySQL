@@ -1,4 +1,4 @@
-# Docker Compose — WordPress + MySQL
+# Docker Compose - WordPress + MySQL
 
 ## Overview
 
@@ -76,12 +76,12 @@ The project objectives were to:
 
 ```
 docker-project-compose-wordpress/
-├── docker-compose.yml
-├── secrets/
-│   ├── db_password.txt
-│   └── db_root_password.txt
-├── README.md
-└── .gitignore
+|-- docker-compose.yml
+|-- secrets/
+|   |-- db_password.txt
+|   `-- db_root_password.txt
+|-- README.md
+`-- .gitignore
 ```
 
 The `secrets/` directory holding the actual credential files is excluded from version control via `.gitignore`; only the `docker-compose.yml` referencing them is committed. Screenshots documenting each phase are included in the accompanying Medium article rather than this repository.
